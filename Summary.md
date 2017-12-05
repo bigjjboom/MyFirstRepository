@@ -19,9 +19,8 @@ fabric在实际运行中会实例化四个LevelDB——index、ledgerProvider、
 
 相关组件列举如下：    
 
-
 package       | path | description
---------      | ---  |
+------      | ---  | ----
 leveldbhelper | /fabric/common/ledger/util/leveldbhelper | 对goleveldb的封装提供一般KV数据库操作
 fsblkstorage  | /fabric/common/ledger/blkstorage/fsblkstorage | 对leveldbhelper进行封装提供区块文件级操作
 historyLeveldb | /fabric/core/ledger/kvledger/historydb/historyLeveldb | 封装leveldbhelper提供historydb的相关功能
@@ -45,33 +44,33 @@ kvledger      | /fabric/core/ledger/kvledger | 封装state和history提供PeerLe
 **DB** 数据库实体，包含数据库操作的相关属性和方法，**增加hbase操作需要的相关属性**
 
 | 属性名 | 类型     | 说明 |
-| :------------- | :------------- |
+| :------------- | :------------- | :----
 | table | string | hbase中对应的表名 |
 | host  | string | hbase运行的主机名 |
 | hbase_ac | gohbase.AdminClient | hbase admin client |
 | hbase_c | gohbase.Client | hbase client |
 
-**func CreatDB(conf \*Conf) \*DB** 创建数据库实体的方法，*增加hbase实例化相关配置，包括table, host, hbase_ac, hbase_c*
+**func CreatDB(conf \*Conf) \*DB** 创建数据库实体的方法，**增加hbase实例化相关配置，包括table, host, hbase_ac, hbase_c**
 
-**func (dbInst *DB) Open()** 打开数据库的方法，**增加hbase对应table的打开或者新建**
+**func (dbInst \*DB) Open()** 打开数据库的方法，**增加hbase对应table的打开或者新建**
 
-**func (dbInst *DB) Close()** 关闭数据库的方法，**增加hbase的关闭**
+**func (dbInst \*DB) Close()** 关闭数据库的方法，**增加hbase的关闭**
 
-**func (dbInst *DB) Get(key []byte) ([]byte, error)** 根据所给的键返回对应的值，**修改为从hbase获取对应的值**
+**func (dbInst \*DB) Get(key []byte) ([]byte, error)** 根据所给的键返回对应的值，**修改为从hbase获取对应的值**
 
-**func (dbInst *DB) Put(key []byte, value []byte, sync bool) error** 向数据库内写入对应的键值对，**修改为向hbase中写入对应的键值对**
+**func (dbInst \*DB) Put(key []byte, value []byte, sync bool) error** 向数据库内写入对应的键值对，**修改为向hbase中写入对应的键值对**
 
-**func (dbInst *DB) Delete(key []byte, sync bool) error** 删除数据库中对应的键值对，**修改为删除hbase中对应的键值对**
+**func (dbInst \*DB) Delete(key []byte, sync bool) error** 删除数据库中对应的键值对，**修改为删除hbase中对应的键值对**
 
-**func (dbInst *DB) GetIterator(startKey []byte, endKey []byte) iterator.Iterator** 根据所给的起始截止位置获得迭代器，**修改为由hbase提供的迭代器**
+**func (dbInst \*DB) GetIterator(startKey []byte, endKey []byte) iterator.Iterator** 根据所给的起始截止位置获得迭代器，**修改为由hbase提供的迭代器**
 
-**func (dbInst *DB) WriteBatch(batch *leveldb.Batch, sync bool) error** 批写入，**修改为hbase批写入**
+**func (dbInst \*DB) WriteBatch(batch \*leveldb.Batch, sync bool) error** 批写入，**修改为hbase批写入**
 
 **增加内容**
 
 **func CreatTable(client gohbase.AdminClient, table string, cFamilies []string) error** hbase新建table操作
 
-**func (dbInst *DB) DeleteTable() error** 删除hbase table操作，多用于测试的cleanup
+**func (dbInst \*DB) DeleteTable() error** 删除hbase table操作，多用于测试的cleanup
 
 这里需要使用golang编写的hbase客户端或者API，在本次实现中选择[tsuna/gohbase](https://github.com/tsuna/gohbase)作为要使用的hbase client
 
