@@ -51,7 +51,7 @@ kvledger      | /fabric/core/ledger/kvledger | 封装state和history提供PeerLe
 | hbase_ac | gohbase.AdminClient | hbase admin client |
 | hbase_c | gohbase.Client | hbase client |
 
-**func CreatDB(conf \*Conf) \*DB** 创建数据库实体的方法，**增加hbase实例化相关配置，包括table, host, hbase_ac, hbase_c**
+**func CreatDB(conf \*Conf) \*DB** 创建数据库实体的方法，*增加hbase实例化相关配置，包括table, host, hbase_ac, hbase_c*
 
 **func (dbInst *DB) Open()** 打开数据库的方法，**增加hbase对应table的打开或者新建**
 
@@ -72,7 +72,7 @@ kvledger      | /fabric/core/ledger/kvledger | 封装state和history提供PeerLe
 **func CreatTable(client gohbase.AdminClient, table string, cFamilies []string) error** hbase新建table操作
 
 **func (dbInst *DB) DeleteTable() error** 删除hbase table操作，多用于测试的cleanup
-  
+
 这里需要使用golang编写的hbase客户端或者API，在本次实现中选择[tsuna/gohbase](https://github.com/tsuna/gohbase)作为要使用的hbase client
 
 ----
