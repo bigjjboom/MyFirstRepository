@@ -19,6 +19,7 @@ fabric在实际运行中会实例化四个LevelDB——index、ledgerProvider、
 
 相关组件列举如下：    
 
+
 package       | path | description
 --------      | ---  |
 leveldbhelper | /fabric/common/ledger/util/leveldbhelper | 对goleveldb的封装提供一般KV数据库操作
@@ -26,6 +27,7 @@ fsblkstorage  | /fabric/common/ledger/blkstorage/fsblkstorage | 对leveldbhelper
 historyLeveldb | /fabric/core/ledger/kvledger/historydb/historyLeveldb | 封装leveldbhelper提供historydb的相关功能
 stateLeveldb  | /fabric/core/ledger/kvledger/txmgmt/statedb/stateLeveldb | 封装leveldbhelper提供statedb的相关功能
 kvledger      | /fabric/core/ledger/kvledger | 封装state和history提供PeerLedgerProvider的相关功能
+
 
 首先，改造leveldbhelper包，使底层调用变为hbase，完成相关的单元测试，确保使用hbase作为存储组件没有问题。
 
@@ -70,7 +72,7 @@ kvledger      | /fabric/core/ledger/kvledger | 封装state和history提供PeerLe
 **func CreatTable(client gohbase.AdminClient, table string, cFamilies []string) error** hbase新建table操作
 
 **func (dbInst *DB) DeleteTable() error** 删除hbase table操作，多用于测试的cleanup
-
+  
 这里需要使用golang编写的hbase客户端或者API，在本次实现中选择[tsuna/gohbase](https://github.com/tsuna/gohbase)作为要使用的hbase client
 
 ----
