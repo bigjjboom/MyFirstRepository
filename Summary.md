@@ -75,3 +75,39 @@ kvledger      | /fabric/core/ledger/kvledger | 封装state和history提供PeerLe
 这里需要使用golang编写的hbase客户端或者API，在本次实现中选择[tsuna/gohbase](https://github.com/tsuna/gohbase)作为要使用的hbase client
 
 ----
+
+### 2.fsblkstorage package
+**目标** 修改原有的FsBlockstoreProvider,封装leveldbhelper,向上提供基于hbase的块保存服务
+
+**新增内容**
+
+**func (p \*FsBlockstoreProvider) DropTable()** 提供cleanup功能，删除对应的ledger表,多用于测试中
+
+----
+
+### 3.historyleveldb package
+**目标** 修改原有HistoryDBProvider,封装leveldbhelper,向上提供基于hbase的historyDB相关服务
+
+**新增内容**
+
+**func (provider \*HistoryDBProvider) DropTable()** 提供cleanup功能，删除对应的historydb,多用于测试中
+
+----
+
+### 4.stateleveldb package
+**目标** 修改原有VersionedDBProvider,VersionedDB,封装leveldbhelper,向上提供基于hbase的versionDB相关服务
+
+**新增内容**
+
+**func (provider \*VersionedDBProvider) DropTable()**
+
+**func (vdb \*versionedDB) DropTable()** 提供cleanup功能，删除对应的statedb,多用于测试中
+
+----
+
+### 5.kvledger package
+**目标** 修改原有Provider,封装blkstorage.BlockStoreProvider,statedb.VersionedDBProvider,historydb.HistoryDBProvider,向上提供基于hbase的存储服务
+
+**新增内容**
+
+**func (provider \*Provider) DropTable()** 提供cleanup功能,删除provider对应的多个db
